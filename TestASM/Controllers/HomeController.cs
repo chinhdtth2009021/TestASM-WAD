@@ -8,23 +8,27 @@ namespace TestASM.Controllers
 {
     public class HomeController : Controller
     {
+        private MyDBContext myDBContext = new MyDBContext();
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Apple()
         {
-            ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Store(string name)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var student = new Student()
+            {
+                Name = name
+            };
+            myDBContext.Students.Add(student);
+            myDBContext.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
